@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div>
+  <a routerLink="/home" class="txt1">
+      Regresar a Home
+  </a>
+</div>
+
+<div class="row" style="padding: 10px;">
+    <div class="card" *ngFor="let item of items | async" style="width: 18rem;margin: 10px;">
+        <img class="card-img-top" [src]="item.url">
+        <div class="card-body">
+            <h5 class="card-title">{{item.nombre}}</h5>
+        </div>
+    </div>
+</div>

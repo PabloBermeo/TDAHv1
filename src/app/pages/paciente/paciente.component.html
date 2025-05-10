@@ -1,0 +1,83 @@
+<div class="limiter animated fadeInLeft">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form (ngSubmit)="onSubmit(f)" 
+                    #f="ngForm"
+                    class="login100-form validate-form flex-sb flex-w">
+                <span class="login100-form-title p-b-51">
+                    Crear nuevo Paciente
+                </span>
+                <label>Id-Paciente</label>
+                <span *ngIf="f.submitted && f.controls['idPaciente'].errors" class="text-danger">No es un Id válido</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" 
+                           type="text" 
+                           name="idPaciente" 
+                           [(ngModel)]="paciente.idPaciente"
+                           required
+                           placeholder="idPaciente">
+
+                    <!-- <span class="focus-input100"></span> -->
+                </div>
+                
+                
+                <label>Nombres y Apellidos</label>
+                <span *ngIf="f.submitted && f.controls['nombre'].errors" class="text-danger">El nombre es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" 
+                           type="text" 
+                           name="nombre" 
+                           [(ngModel)]="paciente.nombre"
+                           required
+                           minlength="4"
+                           placeholder="Nombre y apellidos">
+
+                    <span class="focus-input100"></span>
+                </div>
+                
+                <label>Edad en años cumplidos:</label>
+                <span *ngIf="f.submitted && f.controls['edad'].errors" class="text-danger">La edad es un número</span>
+                <div class="wrap-input100 m-b-16" data-validate = "Edad is required">
+                    <input class="input100"
+                           type="number" 
+                           name="edad" 
+                           [(ngModel)]="paciente.edad"
+                           required
+                           number
+                           
+                           placeholder="Edad en años">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="col-md-8 pl-1">
+                    <div class="form-group">
+                        <label for="email">Sexo:</label>
+                        <span *ngIf="f.submitted && (f.controls['sexo_Paciente'].errors || paciente.sexo.length ===0 )" class="text-danger">...Seleccionar el sexo</span>
+                      <select class="form-select" id="inputGroupSelect04"
+                             style="width:75%;height:35px"
+                             aria-label="Ejemplo de select"
+                             [(ngModel)]="paciente.sexo"
+                             name="sexo_Paciente">
+    
+                             <option selected [disabled]="true" value="-1">Seleccione...</option>
+                             <option value="M">Masculino</option>
+                             <option value="F">Femenino</option>
+                             
+                      </select>
+                    </div>
+                  </div>
+
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn" type="submit">
+                        Crear Paciente
+                    </button>
+                </div>
+
+            </form>
+            <br>
+                <button class="login100-form-btn" type="button" (click)="cancel()"> 
+                    Cancelar
+                </button>
+        </div>
+    </div>
+</div>

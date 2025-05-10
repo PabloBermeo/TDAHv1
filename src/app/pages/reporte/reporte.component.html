@@ -1,0 +1,121 @@
+<app-navbar></app-navbar>
+<!-- <hr><br><br><hr> -->
+<div class="container-login100-form-btn m-t-17">
+  <button class="login100-form-btn" type="button"
+      (click)="reporte_TDA_a_Excel()">
+      Descargar Reporte TDA
+  </button>
+</div>
+<hr>
+<div class="row" *ngIf="this.pacientes.length>0 || true" >
+  <h3 class="text-center">Lista de Pacientes</h3>
+  <form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Nombre de Paciente" aria-label="Search"
+            (keyup)="filtrarxNombre(filtroNombre.value)" #filtroNombre>
+            
+    <button class="btn btn-outline-primary" type="submit" style="width: 25%;"
+          (click)="filtrarxNombre(filtroNombre.value)"
+    >Buscar</button>
+  </form>
+  <h6><br></h6>
+  <hr>
+  <table class="table" >
+    <thead class="thead-dark">
+        <tr>
+          <th style="width: 40px;">No</th>
+          <th style="width: 120px;">Identificador</th>
+          <th style="width: 180px;">Nombre Paciente</th>
+          <th style="width: 50px;">Edad</th>
+          <th style="width: 200px;" *ngIf="nivelUsuario>1">Dr. Inicial</th>
+          <th style="width: 120px;">Evaluaciones</th>
+          <th style="width: 200px;">Acción</th>
+        </tr>
+
+    </thead>
+    <tbody >
+      <tr *ngFor="let paciente of this.pacientes;let pos=index">
+          <td style="width: 40px;"> {{pos+1}}</td>
+          <td style="width: 120px;"> {{paciente.idPaciente}}</td>
+          <td style="width: 180px;">{{paciente.nombre}}</td>
+          <td style="width: 50px;">{{paciente.edad}}</td>
+          <td style="width: 200px;" *ngIf="nivelUsuario>1">{{paciente.creadoPor}}</td>
+          <td style="width: 120px;text-align: center;">{{paciente.n_evaluaciones}} </td>
+          <td style="width: 200px;">
+            <!-- <div class="contact100-form-checkbox">
+              <input [(ngModel)]="listar[pos]" class="input-checkbox100" id="'ckb_r'+{{pos}}" type="checkbox" name="remember-me">
+              <label class="label-checkbox100" for="'ckb_r'+{{pos}}">
+                Incluir en Reporte
+              </label>
+            </div> -->
+            <div class="form-checkbox">
+              <input [(ngModel)]="listar[pos]" class="input" id="'ckb_r'+{{pos}}" type="checkbox" name="remember-me">
+              <label class="label" for="'ckb_r'+{{pos}}">
+                &nbsp; Incluir en Reporte
+              </label>
+            </div>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br><hr>
+</div>
+<form  class="login100-form validate-form flex-sb flex-w"
+    (ngSubmit)="consultarPacientes(fo)" #fo="ngForm">
+
+    <!-- <span class="login100-form-title p-b-51">
+    Consulta Individual
+    </span> -->
+
+   <!-- <span *ngIf="fo.submitted && fo.controls['username'].errors"
+    class="text-danger">El idPaciente es obligatorio</span>
+     <div class="wrap-input100 m-b-16">
+          <input class="input100" 
+                type="email" 
+                name="username" 
+                [(ngModel)]="email_consulta"
+                placeholder="IdPacientes;"
+                required>
+               
+    </div> -->
+    <div class="container-login100-form-btn m-t-17">
+    <button class="login100-form-btn" type="submit">
+        Consultar Pacientes Seleccionados
+    </button>
+    </div>
+
+</form>
+<hr>
+<div class="container-login100-form-btn m-t-17">
+  <button class="login100-form-btn" type="button"
+      (click)="consultarTodos()">
+      Consultar Todos los Pacientes
+  </button>
+</div> 
+<div *ngIf="mostrarStd" class="m-5">
+  <hr>
+  <h1>Reportes</h1>
+  <!-- <button *ngIf="mostrarStd" (click)="verEstadisticas(1)" class="btn btn-success">Estadísticas </button> -->
+  <div class="container-login100-form-btn m-t-17">
+    <button class="login100-form-btn" type="button"
+        (click)="reporte_a_Excel()">
+        Descargar Reporte a Excel
+    </button>
+  </div> 
+  <hr>
+<!-- jbermeo@ups.edu.ec -->
+  <div class="row" *ngIf="mostrarStd" >
+    <div class="col" *ngFor="let pos of n_pos" style="padding: 20px;">
+      <app-resultados [n_evaluacion]="pos">&nbsp;</app-resultados>&nbsp;&nbsp;&nbsp;
+    </div>
+    
+  </div>
+</div> 
+
+<hr>
+<!-- <div class="d-grid gap-2 col-6 mx-auto">
+  <button class="btn btn-outline-danger" type="button"
+  (click)="irHome()">
+  Ir a Home
+</button> 
+</div>--> 

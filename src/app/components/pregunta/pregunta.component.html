@@ -1,0 +1,158 @@
+
+<nav id="list-example" class="navbar bg-body-tertiary px-3 mb-3">
+  <ul class="nav nav-pills" *ngFor="let pregunta of preguntas;let i=index">
+    <li class="nav-item" >
+      <!-- <a *ngIf="i<l_nav" class="nav-link"   [href]="'#list-item-'+i">P{{i+1}}</a> -->
+      <a *ngIf="i<3*tamanio_p && (i%tamanio_p)===0" class="nav-link" [class.active]="itemActivo === i"  (click)="scrollToElement('list-item-'+i,i)">P{{i+1}}-{{i+tamanio_p}}</a>
+    </li>
+     <li *ngIf="i==3*tamanio_p" class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
+      <ul class="dropdown-menu" >
+        <li *ngFor="let pregunta2 of preguntas;let i2=index">
+          <a *ngIf="i2>=3*tamanio_p && (i2%tamanio_p)===0" class="dropdown-item" [class.active]="itemActivo === i2"  (click)="scrollToElement('list-item-'+i2,i2)">P{{i2+1}}-{{i2+tamanio_p}}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" (click)="scrollToElement('list-item-'+(preguntas.length-1),preguntas.length-1)">Final</a></li> 
+        
+      </ul>
+    </li> 
+  </ul>
+</nav>
+<!-- A continuacion crear la sección de navegación para ir entre los distintos grupos -->
+<div class="row" *ngIf="preguntas[0].n_grupo<14" >
+  <div  class="col-2" *ngFor="let grupo of grupos;let i=index">
+   <div class="row form-check form-switch" >
+      <input class="form-check-input" type="checkbox" role="switch" [id]="'idswitch'+i" 
+             [checked]="grupo.visible" (change)="grupo.visible=!grupo.visible">
+      <label class="form-check-label" for="'idswitch'+i" > {{grupo.nombre}}-({{grupo.siglas}})</label>
+    </div>
+  </div>
+  <div class="col-2 form-check form-switch" >
+    <input class="form-check-input" type="checkbox" role="switch" id="idswitchTodos" 
+            [checked]="visible_todos" (change)="todos()">
+    <label class="form-check-label" for="'idswitch'+i" > TODOS</label>
+  </div>
+</div>
+<br>
+<!-- Preguntas  -->
+  <div class="col-12" >
+      <div data-bs-spy="scroll" data-bs-target="#list-example" 
+            data-bs-smooth-scroll="true"
+            data-bs-root-margin="0px 0px -40%"
+            class="scrollspy-example" tabindex="0"
+            >
+          
+          <div *ngFor="let pregunta of preguntas;let i=index" [id]="'list-item-'+i">
+           <div *ngIf="pregunta.n_grupo>=14 || grupos[pregunta.n_grupo-1].visible===true"
+            class="d-flex justify-content-start gap-3 flex-wrap">
+                <div style="width: 100%;">
+                  <h6>
+                    <b>P{{i+1}}</b>
+                    <b *ngIf="pregunta.n_grupo!==undefined && pregunta.n_grupo<14" >({{grupos[pregunta.n_grupo-1].siglas}})</b>
+                    <b>.-</b>
+                      {{pregunta.Enunciado.trim()}}  
+                  </h6>
+                </div>
+                <div class="form-check form-check-inline"
+                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
+                  <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i"
+                        [id]="'inlineRadio1'+i" value="1" (change)="opcionesSeleccionadas[i]=1"
+                        [checked]="opcionesSeleccionadas[i]===1">
+                  <label class="form-check-label" [for]="'inlineRadio1'+i">
+                    <img *ngIf="pregunta.op1url" [src]="pregunta.op1url" alt="pregunta.op1" style="max-height: 100px;">
+                    {{pregunta.op1}}
+                  </label>
+                </div>
+                <div class="form-check form-check-inline"
+                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
+                  <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i" 
+                        [id]="'inlineRadio2'+i" value="2" (change)="opcionesSeleccionadas[i]=2"
+                        [checked]="opcionesSeleccionadas[i]===2">
+                  <label class="form-check-label" [for]="'inlineRadio2'+i">
+                    <img *ngIf="pregunta.op2url" [src]="pregunta.op2url" alt="pregunta.op2" style="max-height: 100px;">
+                    {{pregunta.op2}}
+                    </label>
+                </div>
+                <div class="form-check form-check-inline"
+                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
+                  <input class="form-check-input mb-2" type="radio" [name]="'inlineRadioOptions-'+i" 
+                        [id]="'inlineRadio3'+i" value="3" (change)="opcionesSeleccionadas[i]=3"
+                        [checked]="opcionesSeleccionadas[i]===3">
+                  <label class="form-check-label" [for]="'inlineRadio3'+i">
+                    <img *ngIf="pregunta.op3url" [src]="pregunta.op3url" alt="pregunta.op3" 
+                        style="max-height: 100px;display: block; margin-bottom: 8px;">
+                    {{pregunta.op3}}
+                    </label>
+                </div>
+            </div>
+            <hr *ngIf="pregunta.n_grupo>=14 || grupos[pregunta.n_grupo-1].visible===true">
+            
+          
+          </div>
+          <div [id]="'list-item-'+(preguntas.length)">
+            <div *ngIf="true" class="col-md-8">
+              <div class="input-group col-md-8">
+                <button  (click)="respuesta(opcionesSeleccionadas)" class="btn btn-outline-primary btn-block">
+                  Seleccione para Terminar.
+                </button>
+              </div>
+            </div>
+          </div>
+          <hr><br>
+      </div>
+      
+  </div>
+
+  
+
+
+  <small *ngIf="mensaje"
+      class="form-text text-danger">Seleccione una respuesta</small>
+
+  <!-- <form>
+   <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+      <div class="input-group col-md-8">
+        <button *ngIf="pos>0" type="submit" (click)="valorSiguiente(false)" class="btn btn-outline-primary btn-block">
+          &lt;- Pregunta previa
+        </button>
+      <button *ngIf="!fin" type="submit" (click)="valorSiguiente(true)" class="btn btn-outline-primary btn-block">
+        siguiente Pregunta ->
+      </button>
+    </div>
+
+  </div> 
+
+  </form>   -->
+
+
+<style>
+  /* @import 'bootstrap/dist/css/bootstrap.min.css'; */
+  @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'); 
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+  }
+  .navbar .dropdown-menu {
+    z-index: 9999;
+
+    
+  }
+  /*.nav-link.active {
+  }*/
+  .scrollspy-example {
+    margin-top: 10px;
+    height: 80%; 
+    overflow-y: scroll;
+    
+  }
+
+  a.nav-link.active {
+    background-color: #3232f9; /* Color de fondo para el ítem activo */
+  color: rgb(255, 255, 255); /* Cambia el color de texto */
+  font-weight: bold; /* Aplica negrita al texto */
+  /* Otros estilos que desees aplicar */
+}
+</style> 

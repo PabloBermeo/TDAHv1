@@ -1,0 +1,78 @@
+<app-navbar *ngIf="!cargarUsuarios">
+  
+</app-navbar>
+<!-- <div *ngIf="!cargarUsuarios">
+  <a routerLink="/home" class="txt1">
+    Regresar a Home
+  </a>
+</div> -->
+<hr *ngIf="!cargarUsuarios">
+<div class="row">
+  
+  <div class="col-md-4">
+    <h3>Seleccione archivos</h3>
+    <div appNgDropFiles [archivos]="archivos" [archivosP]="archivosP"  (mouseSobre)="estaSobreElemento=$event" [ngClass]="{ 'file-over': estaSobreElemento }" class="well drop-zone">
+        <h4>Coloque aquí sus archivos</h4>
+        <img src="drop-images.png">
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h4>Cargar archivos </h4>
+    <button *ngIf="!cargarUsuarios" (click)="cargarImagenes()" [disabled]="archivos.length + archivosP.length===0 " class="btn btn-success">Cargar a Firebase</button>
+    <button *ngIf="cargarUsuarios" (click)="cargar()" [disabled]="archivos.length + archivosP.length===0 " class="btn btn-success">Crear Usuarios</button>
+    &nbsp;   
+    <button (click)="limpiarArchivos()" class="btn btn-danger">Limpiar</button>
+    <h3></h3>
+    <table class="table" *ngIf="!cargarUsuarios">
+      <thead class="thead-dark">
+          <tr>
+            <th>Nombre de Archivo</th>
+            <th>Tamaño</th>
+            <th>Progreso</th>
+          </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let archivo of archivos">
+            <td>{{archivo.nombreArchivo}}</td>
+            <td>{{archivo.archivo.size/1024/1024 | number: '.2-2'}} MB</td>
+            <td>
+                <div class="progress">
+                  <div class="progress-bar" 
+                        role="progressbar" 
+                        [ngStyle]="{'width':archivo.progreso +'%'}">
+                  </div>
+                </div>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <table *ngIf="archivosP.length > 0" class="table">
+      <thead class="thead-dark">
+          <tr>
+            <th *ngIf="!cargarUsuarios">Archivo de Preguntas</th>
+            <th *ngIf="cargarUsuarios">Archivo de Usuarios</th>
+            <th>Tamaño</th>
+            <th>Progreso</th>
+          </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let archivo of archivosP">
+            <td>{{archivo.nombreArchivo}}</td>
+            <td>{{archivo.archivo.size/1024 | number: '.2-2'}} Kb</td>
+            <td>
+                <div class="progress">
+                  <div class="progress-bar" 
+                        role="progressbar" 
+                        [ngStyle]="{'width':archivo.progreso +'%'}">
+                  </div>
+                </div>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

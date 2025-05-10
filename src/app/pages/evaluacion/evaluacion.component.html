@@ -1,0 +1,30 @@
+<app-navbar *ngIf="mostrar|| !enEvaluacion"></app-navbar>
+<hr>
+<br *ngIf="enEvaluacion"><br *ngIf="enEvaluacion">
+<h1 >Evaluación</h1>
+<h3 *ngIf="!mostrar && !enEvaluacion" >Espere un momento mientras se cargan las preguntas...</h3>
+<!-- <div class="d-grid gap-2 d-md-block"  *ngIf="mostrar"> -->
+<div class="d-flex gap-3"  *ngIf="mostrar">
+    <div *ngFor="let cuestionario of _cargaImagenes.cuestionarioActivos;let i=index">
+
+        <button type="button" (click)="IniciaEvaluacion(cuestionario.id)" 
+                *ngIf="cuestionario.activo"
+                class="btn btn-outline-primary btn-lg" >
+            {{cuestionario.nombre}}
+        </button>
+    </div>
+    
+    <!-- <button type="button" (click)="IniciaEvaluacion(2)" class="btn btn-outline-primary btn-lg">TDAH</button> -->
+</div> 
+
+
+<app-pregunta *ngIf="enEvaluacion && !mostrar" [n_preguntas]="posPreguntas" 
+                [opcionesSeleccionadas]="opcionSeleccionadas"
+                (opcionR)="respuestaP($event)"></app-pregunta>
+
+<!-- <h2 *ngIf="!mostrar">Escribir respuestas
+     <div>
+        <button type="button" (click)="IniciaEvaluacion(1)"  class="btn btn-primary btn-lg btn-block">Repetir evaluación</button>
+    </div>
+</h2> -->
+<!-- <app-pregunta *ngIf="mostrar" [n_preguntas]="posPreguntas" ></app-pregunta> -->

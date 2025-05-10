@@ -1,0 +1,22 @@
+<h1 *ngIf="!verEstadisticas"> Espere un momento... </h1>
+&nbsp;
+<div class="row" *ngIf="verEstadisticas" >
+    <div class="col-3"  *ngFor="let pos of n_pos">
+        <app-resultados [n_evaluacion]="pos"></app-resultados>
+    </div>
+</div>
+<!-- <app-resultados [n_evaluacion]="1"></app-resultados>
+</div>
+     <img src="..." class="rounded" alt="..."> -->
+  
+  <!-- <div class="card" *ngFor="let evaluacion of evaluaciones " style="width: 18rem;">
+      
+      <div class="card-body">
+          <h5 class="card-title">Nota: {{evaluacion.calificacion}}/{{evaluacion.preguntas.length}}={{evaluacion.calificacion/evaluacion.preguntas.length | percent:'2.1-1'}}</h5> 
+          <h5>Fecha: {{evaluacion.fecha_fin | date: 'd-MMM-yy, hh:mm'}}</h5>
+
+
+      </div>
+  </div> 
+</div>-->
+

@@ -1,0 +1,22 @@
+/* Establecer el ancho de las columnas en el thead */
+table thead {
+    display: block;
+    width: 100%;
+  }
+  
+  table thead tr th {
+    background-color: #827ffe;
+    color: white;
+    /*width: auto; /*150px;/* Ajusta el ancho según tus necesidades */
+  }
+  
+  /* Establecer el ancho de las columnas en el tbody */
+  table tbody {
+    height: 200px;
+    display: block;
+    overflow-y: scroll;
+    width: 100%;
+  }
+  
+
+  

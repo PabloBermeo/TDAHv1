@@ -1,0 +1,81 @@
+<div *ngIf="mostrar" class="row">
+
+      <p>
+          <button class="btn btn-outline-primary" type="button" (click)="mostrarDetalle()">
+            <h5 class="card-title">
+              Nombre: {{nombre(evaluacion.idPaciente)}}<br>
+            </h5>
+            <span>
+              Prueba: {{tituloPrueba}}<br>
+              <!-- Fecha: {{evaluacion.fecha_fin| date: 'd-MMM-yy, hh:mm'}}<br>  -->
+              FechaIni: {{this.fecha | date: 'd-MMM-yy, HH:mm'}}<br> 
+              FechaUltima: {{this.fechaUltima | date: 'd-MMM-yy, HH:mm'}}<br> 
+              Completado: {{evaluacion.contestadas}}/{{evaluacion.preguntas.length}}={{evaluacion.contestadas/evaluacion.preguntas.length | percent:'1.1-1'}}
+              <!-- Nota: {{evaluacion.calificacion}}/{{evaluacion.preguntas.length}}={{evaluacion.calificacion/evaluacion.preguntas.length | percent:'2.1-1'}} -->
+            </span>
+            <h6><span>IdPaciente: {{evaluacion.idPaciente}}</span></h6>
+        </button>
+      </p>
+      <div class="row" *ngIf="mostrar && verDetalle && preguntas && mostrarDetalleAdmin">
+        <table class="table">
+          <thead class="text-primary">
+            <th>Subtest Rendimiento</th>
+            <th>Puntuación directa</th>
+            <!-- <th>Desarrollo por Edades(meses)</th> -->
+            <th>Percentil(%).</th>
+            <!-- <th>Nivel de Desarrollo/Adaptación (D/A)</th> -->
+            <!-- <th>cantidad_Preguntas</th> -->
+          </thead>
+          <tbody>
+            <tr *ngFor="let grupo of this.subgrupo;let i1=index">
+              <td>{{grupo.nombre}}-{{grupo.siglas}}</td>
+              <td>{{grupo.puntuacion}}</td>
+              <td>{{grupo.percentil}}</td>
+              <!-- <td>{{grupo.percentil|percent:'1.1-2'}}</td> -->
+              <!-- <td>{{grupo.cantidad_P}}</td> -->
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+      <div class="col" *ngIf="mostrar && verDetalle && preguntas && mostrarDetalleAdmin">
+        <!-- Si quiero ver detalle de respuestas quitar del *ngIf *ngIf="mostrarDetalleAdmin"-->
+        
+        <div class="card card-body"   *ngFor="let pregunta of preguntas; let i=index" style="width: 20rem">
+          <!-- <div class="col"> -->
+            <img src="images/right_answer.png" *ngIf="rightAnswer(i)" class="d-block w-5 rounded" width="20" height="20" alt="correcta">
+            <img src="images/wrong_answer.png" *ngIf="!rightAnswer(i)" class="d-block w-5" width="20" height="20" alt="incorrecta">
+            P{{i+1}}.-{{pregunta.Enunciado}}
+            <br *ngIf="!(pregunta.E_url===undefined) && pregunta.E_url">
+                <!-- <img class="card-img-center" *ngIf="pregunta.E_url"  [src]="pregunta.E_url">  -->
+                <img width="100%" height="auto" *ngIf="pregunta.E_url" [src]="pregunta.E_url">
+            <br>
+                <button type="button" [class]="clase(1,i)"> 
+                    <label *ngIf="pregunta.op1 || pregunta.op1!=='0.012321'">{{pregunta.op1}}</label>
+                    <img width="100%" height="auto" *ngIf="pregunta.op1url"   [src]="pregunta.op1url"> 
+                    
+                </button> 
+                <br>
+                <button type="button" [class]="clase(2,i)"> 
+                  <label *ngIf="pregunta.op2 || pregunta.op2!=='0.012321'">{{pregunta.op2}}</label>
+                  <img  width="100%" height="auto" *ngIf="pregunta.op2url"  [src]="pregunta.op2url"> 
+              </button> 
+              <br>
+              <button type="button" [class]="clase(3,i)"> 
+                <label *ngIf="pregunta.op3 || pregunta.op3!=='0.012321'">{{pregunta.op3}}</label>
+                <img width="100%" height="auto" *ngIf="pregunta.op3url"  [src]="pregunta.op3url"> 
+              </button> 
+              <br>
+              <button type="button" [class]="clase(4,i)"> 
+                <label *ngIf="pregunta.op4 || pregunta.op4!=='0.012321'">{{pregunta.op4}}</label>
+                <img width="100%" height="auto" *ngIf="pregunta.op4url"  [src]="pregunta.op4url"> 
+              </button> 
+          
+        </div>
+        <br>
+      </div>
+      
+ 
+  
+  
+  </div>

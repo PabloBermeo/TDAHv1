@@ -1,0 +1,16 @@
+.timer{
+	display:flex;
+	text-align:center;
+    color:white;
+}
+ .timer .unit{
+	padding:4px;
+	
+    color:white;
+}
+
+.timer .unit .strong{
+	display:block;
+    font-size:2rem;
+	
+}

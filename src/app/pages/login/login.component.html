@@ -1,0 +1,89 @@
+
+
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+ 
+
+<div class="limiter animated fadeInRight"  >
+   
+    <div class="container-login100">
+       
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <div class="card" style="width: 100%;">
+                <img src="images/la_salesiana_LOGO.png" class="card-img-center" alt="La Salesiana Telecomunicaciones">
+            </div>
+            <form (ngSubmit)="login(fo)"
+                #fo="ngForm"
+                class="login100-form validate-form flex-sb flex-w">
+
+                <span class="login100-form-title p-b-51">
+                    Login
+                </span>
+
+                <span *ngIf="fo.submitted && fo.controls['email'].errors" class="text-danger">El correo es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" 
+                           type="email" 
+                           name="email" 
+                           [(ngModel)]="usuario.email"
+                           required
+                           email
+                           placeholder="Username">
+
+                    <span class="focus-input100"></span>
+                </div>
+                
+                <span *ngIf="fo.submitted && fo.controls['password'].errors" class="text-danger">La contraseña debe de ser más de 6 letras</span>
+                <div class="form-group wrap-input100 m-b-16" data-validate = "Password is required">
+                    <input class="input100"
+                           [type]="fieldTextType ? 'text': 'password'" 
+                           name="password"
+                           [(ngModel)]="usuario.password" 
+                           required
+                           minlength="6"
+                           placeholder="Password"
+                           style="display: flex;">
+                    
+                   
+                    <span class="focus-input100"></span>
+                </div>
+                
+                <div class="flex-sb-m w-full p-t-3 p-b-24">
+                    <div class="contact100-form-checkbox">
+                        <input [(ngModel)]="recordarme" class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            Recordar mi usuario
+                        </label>
+                    </div>
+                    
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i
+                            class="fa"
+                            [ngClass]="{
+                                'fa-eye-slash': !fieldTextType,
+                                'fa-eye': fieldTextType
+                            }"
+                            (click)="mostrarOcultarPwd()"
+                            ></i>
+                        </span>
+                    </div>
+                    <label>{{!fieldTextType ? 'Mostrar Contraseña': 'Ocultar Contraseña'}}</label>
+                    
+
+                    <!-- <div>
+                        <a routerLink="/registro" class="txt1">
+                            ¿No tienes cuenta?
+                        </a>
+                    </div> -->
+                </div>
+
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn" type="submit">
+                        Ingresar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,136 @@
+<app-navbar ></app-navbar>
+<!-- <br><br><br> -->
+<hr>
+<!-- <div class="text-center"><a href="/paciente" >Agregar paciente</a></div> -->
+<button  (click)="crearPaciente()" class="btn btn-outline-success">Agregar Paciente</button>
+  
+<div class="table-responsive">
+    <table class="table" style="height: 235px;
+                                display: block;
+                                overflow-y: scroll;"
+                                *ngIf="this.pacientes.length>0">
+      <thead class=" text-primary">
+        <th>
+          &nbsp;No&nbsp;
+        </th>
+        <th>
+          Nombre Paciente&nbsp;&nbsp;
+        </th>
+        <th>
+          Evaluaciones&nbsp;
+        </th>
+        <th >
+          Evaluador
+        </th>
+        <th >
+          Acciones
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paciente of this.pacientes;let i=index">
+          <td>
+            {{i+1}}
+          </td>
+          <td>
+            {{paciente.nombre}}
+          </td>
+          <td>
+            {{paciente.n_evaluaciones}}
+          </td>
+          <td>
+            {{paciente.creadoPor}}
+          </td>
+          <td>
+              <div class="row" style="justify-content: center;align-content: center;">
+                  <div> 
+                    <button type="button" class="btn btn-outline-success"
+                            (click)="listar(i)">
+                            Listar
+                    </button> &nbsp;
+                      <button type="button" class="btn btn-danger"
+                              (click)="deletePaciente(i)"
+                              style="background: #de1010;">
+                              borrar
+                      </button>&nbsp;
+                      <button type="button" class="btn btn-success"
+                              (click)="evaluarNew_direct(i)">
+                              Nueva Eval
+                      </button>
+                  </div>
+
+              </div>
+
+              
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="table-responsive" *ngIf="listarEvaluaciones">
+  <hr>
+    <table class="table">
+      <thead class=" text-primary">
+        <th>
+          Nº
+        </th>
+        <th>
+          Nombre Paciente
+        </th>
+        <th>
+          Fecha Ini
+        </th>
+        <th>
+          Último acceso
+        </th>
+        <th >
+          Evaluador
+        </th>
+        <th >
+          Finalizado
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evaluacion of this.evaluaciones;let i=index">
+          <td>
+            {{i+1}}
+          </td>
+          <td>
+            {{this.pacientes[select_P].nombre}}
+          </td>
+          <td>
+            {{evaluacion.fecha_ini | date: 'd-MMM-yy, HH:mm'}}
+          </td>
+          <td>
+            {{evaluacion.fecha_fin | date: 'd-MMM-yy, HH:mm'}}
+          </td>
+          <td>
+            <span>{{this.pacientes[select_P].creadoPor}}</span>
+          </td>
+          <td>
+              <div class="row" style="justify-content: center;align-content: center;">
+                  <div> 
+                    <label *ngIf="evaluacion.finalizado">
+                        {{evaluacion.fecha_fin | date: 'd-MMM-yy, hh:mm'}}
+                    </label>
+                    <button *ngIf="!evaluacion.finalizado" type="button" class="btn btn-outline-success"
+                            (click)="evaluar(i)">
+                            Continuar Eval.
+                    </button>
+
+                      
+                  </div>
+
+              </div>
+
+              
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <hr>
+<button *ngIf="listarEvaluaciones" type="button" class="btn btn-outline-success text-center"
+        (click)="evaluarNew()" style="align-items: center;">
+Nueva Evaluación
+</button> 
