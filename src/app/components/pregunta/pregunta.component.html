@@ -42,9 +42,8 @@
             >
           
           <div *ngFor="let pregunta of preguntas;let i=index" [id]="'list-item-'+i">
-           <div *ngIf="pregunta.n_grupo>=14 || grupos[pregunta.n_grupo-1].visible===true"
-            class="d-flex justify-content-start gap-3 flex-wrap">
-                <div style="width: 100%;">
+           <div *ngIf="pregunta.n_grupo>=14 || grupos[pregunta.n_grupo-1].visible===true">
+                <div class="row" style="width: 100%;">
                   <h6>
                     <b>P{{i+1}}</b>
                     <b *ngIf="pregunta.n_grupo!==undefined && pregunta.n_grupo<14" >({{grupos[pregunta.n_grupo-1].siglas}})</b>
@@ -52,36 +51,40 @@
                       {{pregunta.Enunciado.trim()}}  
                   </h6>
                 </div>
-                <div class="form-check form-check-inline"
-                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
-                  <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i"
-                        [id]="'inlineRadio1'+i" value="1" (change)="opcionesSeleccionadas[i]=1"
-                        [checked]="opcionesSeleccionadas[i]===1">
-                  <label class="form-check-label" [for]="'inlineRadio1'+i">
-                    <img *ngIf="pregunta.op1url" [src]="pregunta.op1url" alt="pregunta.op1" style="max-height: 100px;">
-                    {{pregunta.op1}}
-                  </label>
-                </div>
-                <div class="form-check form-check-inline"
-                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
-                  <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i" 
-                        [id]="'inlineRadio2'+i" value="2" (change)="opcionesSeleccionadas[i]=2"
-                        [checked]="opcionesSeleccionadas[i]===2">
-                  <label class="form-check-label" [for]="'inlineRadio2'+i">
-                    <img *ngIf="pregunta.op2url" [src]="pregunta.op2url" alt="pregunta.op2" style="max-height: 100px;">
-                    {{pregunta.op2}}
+                <div class="d-flex justify-content-start gap-1 flex-nowrap">
+                  <div class="form-check form-check-inline"
+                  style="flex-direction: column; display: flex; align-items: center; width: 110px;">
+                    <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i"
+                          [id]="'inlineRadio1'+i" value="1" (change)="opcionesSeleccionadas[i]=1"
+                          [checked]="opcionesSeleccionadas[i]===1">
+                    <label class="form-check-label" [for]="'inlineRadio1'+i">
+                      <img *ngIf="pregunta.op1url" [src]="pregunta.op1url" alt="pregunta.op1" 
+                      style="max-height: 100px; max-width: 100%; height: auto;">
+                      {{pregunta.op1}}
                     </label>
-                </div>
-                <div class="form-check form-check-inline"
-                style="flex-direction: column; display: flex; align-items: center; width: 150px;">
-                  <input class="form-check-input mb-2" type="radio" [name]="'inlineRadioOptions-'+i" 
-                        [id]="'inlineRadio3'+i" value="3" (change)="opcionesSeleccionadas[i]=3"
-                        [checked]="opcionesSeleccionadas[i]===3">
-                  <label class="form-check-label" [for]="'inlineRadio3'+i">
-                    <img *ngIf="pregunta.op3url" [src]="pregunta.op3url" alt="pregunta.op3" 
-                        style="max-height: 100px;display: block; margin-bottom: 8px;">
-                    {{pregunta.op3}}
-                    </label>
+                  </div>
+                  <div class="form-check form-check-inline"
+                  style="flex-direction: column; display: flex; align-items: center; width: 110px;">
+                    <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i" 
+                          [id]="'inlineRadio2'+i" value="2" (change)="opcionesSeleccionadas[i]=2"
+                          [checked]="opcionesSeleccionadas[i]===2">
+                    <label class="form-check-label" [for]="'inlineRadio2'+i">
+                      <img *ngIf="pregunta.op2url" [src]="pregunta.op2url" alt="pregunta.op2" 
+                      style="max-height: 100px; max-width: 100%; height: auto;">
+                      {{pregunta.op2}}
+                      </label>
+                  </div>
+                  <div class="form-check form-check-inline"
+                  style="flex-direction: column; display: flex; align-items: center; width: 110px;">
+                    <input class="form-check-input" type="radio" [name]="'inlineRadioOptions-'+i" 
+                          [id]="'inlineRadio3'+i" value="3" (change)="opcionesSeleccionadas[i]=3"
+                          [checked]="opcionesSeleccionadas[i]===3">
+                    <label class="form-check-label" [for]="'inlineRadio3'+i">
+                      <img *ngIf="pregunta.op3url" [src]="pregunta.op3url" alt="pregunta.op3" 
+                          style="max-height: 100px; max-width: 100%; height: auto;">
+                      {{pregunta.op3}}
+                      </label>
+                  </div>
                 </div>
             </div>
             <hr *ngIf="pregunta.n_grupo>=14 || grupos[pregunta.n_grupo-1].visible===true">

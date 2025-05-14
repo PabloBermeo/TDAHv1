@@ -2,6 +2,7 @@ export class UsuarioModel{
     email:string;
     password:string;
     nombre: string;
+    edad?:number;
 }
 export class PacienteModel{
     creadoPor?:string;

@@ -291,7 +291,7 @@ export class CargaImagenesService {
                 {n_grupo:12,nombre:'Auto-Cuidado Personal',siglas:'ACP',visible:true,cantidad_P:13},
                 {n_grupo:13,nombre:'Conducta Adaptativa',siglas:'CA',visible:true,cantidad_P:15},
                 {n_grupo:14,nombre:'ESTAN VALORES POR DEFAULT',siglas:'AAA',visible:true,cantidad_P:0},
-                //{n_grupo:15,nombre:'TDA',siglas:'TDA',visible:true,cantidad_P:60},
+                {n_grupo:15,nombre:'TDA',siglas:'',visible:true,cantidad_P:60},
                 ]
                 return;
               }else{
@@ -696,7 +696,7 @@ let reportes=[];
     var fechaIni:Date,fechaFin:Date;
 
     
-    console.log('typeof(fecha_ini):',typeof(evaluacion.fecha_ini),' -instance(..):',evaluacion.fecha_ini instanceof Date);
+    //console.log('typeof(fecha_ini):',typeof(evaluacion.fecha_ini),' -instance(..):',evaluacion.fecha_ini instanceof Date);
     if(evaluacion.fecha_ini instanceof Date){
       fechaIni=evaluacion.fecha_ini;
       fechaFin=evaluacion.fecha_fin;
@@ -709,13 +709,16 @@ let reportes=[];
       fechaIni=(new Timestamp(f1.seconds,f1.nanoseconds)).toDate();
       fechaFin=(new Timestamp(f2.seconds,f2.nanoseconds)).toDate();
     }
-    console.log('nombre_Paciente:',this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0]);
+    //console.log('nombre_Paciente:',this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0]);
     const paciente_filtrado=this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0];
     const error=evaluacion.contestadas-evaluacion.calificacion;
-    const ici=(evaluacion.calificacion-error)*100/(evaluacion.calificacion+error);
+    const ici=evaluacion.contestadas!==0?(evaluacion.calificacion-error)*100/(evaluacion.calificacion+error):0;
     const aniosTDAH=paciente_filtrado===undefined?'no definido': this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0].edad;
     var eneatiposTDA={ EN_A:0,EN_E:0,EN_AminusE:0,EN_ICI:0 };
-    eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0].edad,evaluacion.calificacion,error);
+    //eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0].edad,evaluacion.calificacion,error);
+    eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.usuariosAll.filter(user1=>user1.email===evaluacion.idPaciente)[0].edad,evaluacion.calificacion,error);
+    ///////////////////////////////////////////////
+    console.log('Edad:',this.usuariosAll.filter(user1=>user1.email===evaluacion.idPaciente)[0].edad,'idPaciente:',evaluacion.idPaciente);
     reporte={
       Id:index+1,
       //Prueba: this.tituloPrueba(evaluacion.preguntas[0]),
@@ -1086,9 +1089,10 @@ async leerUsuariosExcel(archivosP1:FileItem[]){
         let usuario1:UsuarioModel;
         
         usuario1={
-          email: (usuarioRef.Correo!==undefined)?usuarioRef.Correo:'',
+          email: (usuarioRef.Correo!==undefined)?usuarioRef.Correo.toString().trim():'',
           nombre:(usuarioRef.Nombre!==undefined)?usuarioRef.Nombre:'',
           password: (usuarioRef.Contraseña!==undefined)?usuarioRef.Contraseña:'',
+          edad:(usuarioRef.Edad!==undefined)?usuarioRef.Edad:19,
           
         }
         usuariosAll.push(usuario1);
@@ -1482,7 +1486,7 @@ private guardarImagen(imagen:{nombre:string, url:string}){
               n_evaluaciones=docs.length;
               resolve(n_evaluaciones);//docs.length);
             },error:err=>{
-              console.log('ERROR: en carga-imagenes.service->leerEvaluacionesPaciente()');
+              console.log('ERROR: en carga-imagenes.service->leer-n-Evaluaciones()');
               reject(err);            
             },complete:()=>{
               resolve(n_evaluaciones);
@@ -1617,7 +1621,7 @@ async readEvaluacionPaciente(idPaciente:string,idTime_ini:number){
               //console.log('carga.service->leerEvaluacionesPaciente->pacientes:',this.pacientes);
               resolve(this.evaluaciones);
             },error:err=>{
-              console.log('ERROR: en carga-imagenes.service->leerEvaluacionesPaciente()');
+              console.log('ERROR: en carga-imagenes.service->leer-Evaluaciones-Paciente()');
               reject(err);            
             },complete:()=>{
               resolve(this.evaluaciones);
@@ -1628,7 +1632,7 @@ async readEvaluacionPaciente(idPaciente:string,idTime_ini:number){
 
       });  
       
-      return Promise.resolve([]);
+      //return Promise.resolve([]);
     } catch (error) {
       
       console.log('Error en leerEvaluaciones',error);
