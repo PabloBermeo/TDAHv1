@@ -716,9 +716,10 @@ let reportes=[];
     const aniosTDAH=paciente_filtrado===undefined?'no definido': this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0].edad;
     var eneatiposTDA={ EN_A:0,EN_E:0,EN_AminusE:0,EN_ICI:0 };
     //eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.pacientes.filter(pac1=>pac1.idPaciente===evaluacion.idPaciente)[0].edad,evaluacion.calificacion,error);
-    eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.usuariosAll.filter(user1=>user1.email===evaluacion.idPaciente)[0].edad,evaluacion.calificacion,error);
+    eneatiposTDA=this.calculaTDAPercentil(paciente_filtrado===undefined?18: this.usuariosAll.filter(user1=>user1.email.toUpperCase().trim()===evaluacion.idPaciente.toUpperCase().trim())[0].edad,evaluacion.calificacion,error);
     ///////////////////////////////////////////////
-    console.log('Edad:',this.usuariosAll.filter(user1=>user1.email===evaluacion.idPaciente)[0].edad,'idPaciente:',evaluacion.idPaciente);
+    //console.log('idPaciente:',evaluacion.idPaciente);
+    //console.log('Edad:',this.usuariosAll.filter(user1=>user1.email.toUpperCase()===evaluacion.idPaciente.toUpperCase())[0]);
     reporte={
       Id:index+1,
       //Prueba: this.tituloPrueba(evaluacion.preguntas[0]),
